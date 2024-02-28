@@ -81,4 +81,14 @@ body,
   }
 }
 
+.nav-text{
+  transform: translateY(5px);
+}
 
+.file_img{
+  transform: translate(22px, -16px);
+}
+
+.kilo{
+  z-index: 1000000000;
+}

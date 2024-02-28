@@ -3,6 +3,7 @@
 import * as z from "zod";
 import { useState, useTransition } from "react";
 import { LoginSchema } from "../../schemas";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -24,6 +25,12 @@ import { FormSuccess } from "../form-success";
 import { login } from "../../actions/login";
 
 export const LoginForm = () => {
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
+    ? "Email already in use with different provider"
+    : "";
+
+  const [showTwoFactor, setShowTwoFactor] = useState(false);
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition();
@@ -42,10 +49,22 @@ export const LoginForm = () => {
     
     startTransition(() => {
       login(values)
-        .then((data)=>{
-          setError(data.error);
-          setSuccess(data.success);
+        .then((data) => {
+          if (data?.error) {
+            form.reset();
+            setError(data.error);
+          }
+
+          if (data?.success) {
+            form.reset();
+            setSuccess(data.success);
+          }
+
+          if (data?.twoFactor) {
+            setShowTwoFactor(true);
+          }
         })
+        .catch(() => setError("Something went wrong"));
     });
   };
 
@@ -54,12 +73,34 @@ export const LoginForm = () => {
       headerLabel="Welcome back"
       backButtonLabel="Sign Up"
       backButtonHref="/auth/signup"
+      backButtonRequest="Don't have an account?"
       showSocial
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-6">
-            <FormField
+            {showTwoFactor && (
+              <FormField
+              control={form.control}
+              name="code"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Two Factor Code</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="123456"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            )}
+           { !showTwoFactor && (
+           <>
+           <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
@@ -83,7 +124,7 @@ export const LoginForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
-                  <Link href="/auth/forgot-password" className="ml-44 text-[#9400FF] text-sm">forgot password?</Link>
+                  <Link href="/auth/reset" className="ml-44 text-[#9400FF] text-sm">forgot password?</Link>
                   <FormControl>
                     <Input
                       {...field}
@@ -96,16 +137,18 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
+            </>
+            )}
           </div>
 
-          <FormError message={error} />
+          <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button
             disabled={isPending}
             type="submit"
             className="w-full bg-[#4942E4] hover:bg-[#1A1679]"
           >
-            Sign In
+            {showTwoFactor ? "Confirm" : "Sign In"}
           </Button>
         </form>
       </Form>

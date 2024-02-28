@@ -10,12 +10,15 @@ export const publicRoutes = [
   
   /**
    * An array of routes that are used for authentication
-   * These routes will redirect logged in users to /settings
+   * These routes will redirect logged in users to /home
    * @type {string[]}
    */
   export const authRoutes = [
     "/auth/signin",
     "/auth/signup",
+    "/auth/error",
+    "/auth/reset",
+    "/auth/new-password"
   ];
   
   /**
@@ -29,4 +32,4 @@ export const publicRoutes = [
    * The default redirect path after logging in
    * @type {string}
    */
-  export const DEFAULT_LOGIN_REDIRECT = "/settings";
+  export const DEFAULT_LOGIN_REDIRECT = "/home";

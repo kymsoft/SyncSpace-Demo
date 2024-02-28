@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "../../components/ui/form";
 
-import { RegCardWrapper } from "./register-cardWrapper";
+import { CardWrapper } from "./card-wrapper";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
@@ -35,7 +35,7 @@ export const RegisterForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      username: "",
+      name: "",
     },
   });
 
@@ -60,10 +60,11 @@ export const RegisterForm = () => {
   };
 
   return (
-    <RegCardWrapper
+    <CardWrapper
       headerLabel="Create an account"
       backButtonLabel="Sign In"
       backButtonHref="/auth/signin"
+      backButtonRequest="Already have an account?"
       showSocial
     >
       <Form {...form}>
@@ -71,10 +72,10 @@ export const RegisterForm = () => {
           <div className="space-y-6">
           <FormField
               control={form.control}
-              name="username"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Userame</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -137,6 +138,6 @@ export const RegisterForm = () => {
         </form>
       </Form>
       <p className="text-center mt-6">OR</p>
-    </RegCardWrapper>
+    </CardWrapper>
   );
 };

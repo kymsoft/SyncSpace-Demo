@@ -55,7 +55,7 @@ const LandNav = () => {
         <div className="flex gap-5 flex-center justify-center ml-12 nav_text hidden md:block">
           <Link href="#features" className="hover:text-blue-500 mx-3">
             <div className="group inline-block">
-              <p className=" text-md inline-block relative group">
+              <p className="nav-text text-md inline-block relative group">
                 Features
                 <span className="before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-blue-500 before:transform before:scale-x-0 before:origin-left before:transition-transform before:duration-300 group-hover:before:scale-x-100"></span>
               </p>
@@ -63,7 +63,7 @@ const LandNav = () => {
           </Link>
           <Link href="#team" className="hover:text-blue-500 mx-3">
             <div className="group inline-block">
-              <p className=" text-md inline-block relative group">
+              <p className="nav-text text-md inline-block relative group">
                 Team
                 <span className="before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-blue-500 before:transform before:scale-x-0 before:origin-left before:transition-transform before:duration-300 group-hover:before:scale-x-100"></span>
               </p>
@@ -71,7 +71,7 @@ const LandNav = () => {
           </Link>
           <Link href="#contacts" className="hover:text-blue-500 mx-3">
             <div className="group inline-block">
-              <p className=" text-md inline-block relative group">
+              <p className="nav-text text-md inline-block relative group">
                 Contact and Support
                 <span className="before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-blue-500 before:transform before:scale-x-0 before:origin-left before:transition-transform before:duration-300 group-hover:before:scale-x-100"></span>
               </p>

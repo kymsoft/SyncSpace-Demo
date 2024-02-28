@@ -6,17 +6,19 @@ import { Button } from "../ui/button";
 interface BackButtonProps{
     href: string;
     label: string;
+    request: string;
 }
 
 export const BackButton = (
     {
         href,
-        label
+        label,
+        request,
     }: BackButtonProps
 ) => {
   return (
     <>
-    <p className="font-normal w-auto text-sm">Don't have an account?</p>
+    <p className="font-normal w-auto text-sm">{request}</p>
      <Button
       variant="link"
       className="w-auto text-[#9400FF] text-sm"
