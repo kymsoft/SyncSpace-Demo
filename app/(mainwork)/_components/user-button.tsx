@@ -1,4 +1,4 @@
-"use client";
+
 
 import { FaUser } from "react-icons/fa";
 import { HiPencilSquare } from "react-icons/hi2";

@@ -77,3 +77,4 @@ export const generateVerificationToken = async (email: string) => {
 
     return verificationToken;
 };
+

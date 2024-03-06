@@ -1,19 +1,19 @@
-"use client";
-
-import HomeWorkspace from "../../../components/workspace/homespace";
+import { LogoutButton } from "../../../components/auth/logout-button";
+import HomeWorkspace from "../_components/workspace/homespace";
+import { useCurrentUser } from "../../../hooks/use-current-user";
+import { ScrollArea } from "../../../components/ui/scroll-area";
 
 const HomePage = () => {
-  
+
   return (
-    <div>
-      <div>
-        <h2>Home</h2>
+    <ScrollArea className="h-[600px] w-full rounded-md border p-4">
+    <div className="h-full">
+      <div className="ml-3">
+        <h1>Home</h1>
       </div>
-
-      
-
       <HomeWorkspace />
     </div>
+    </ScrollArea>
   );
 };
 

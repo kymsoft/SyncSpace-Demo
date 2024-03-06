@@ -78,6 +78,7 @@ body,
   }
   body {
     @apply bg-background text-foreground;
+    @apply overflow-hidden;
   }
 }
 
@@ -91,4 +92,8 @@ body,
 
 .kilo{
   z-index: 1000000000;
+}
+
+.folderplus{
+  transform: translateY(5px);
 }

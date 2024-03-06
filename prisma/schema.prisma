@@ -15,18 +15,19 @@ enum UserRole{
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
+ id           String @id @default(cuid())
   email         String?   @unique
   emailVerified DateTime?
-  image         String?
+  image         String? @unique
   password      String?
   role          UserRole @default(USER)
   accounts      Account[]
   isTwoFactorEnabled  Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
-  member SpaceMembers?
-  admin  SpaceAdmins?
+  // member SpaceMembers?
+  // admin  SpaceAdmins?
+  space Space[]
+
   
 }
 
@@ -87,33 +88,50 @@ model TwoFactorConfirmation {
 
 model Space{
   id String @id @default(cuid())
-  name String
+  name String @unique
   description  String?
-  tag String @unique
+  tag String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  documents Document[]
 
-  members SpaceMembers[]
-  admins  SpaceAdmins[]
-}
-
-model SpaceMembers {
-  id String @id @default(cuid())
-  userId  String
-  spaceId String
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
-
-  @@unique([userId])
+  // members SpaceMembers[]
+  // admins  SpaceAdmins[]
+  userId String?
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
 }
 
-model SpaceAdmins {
-  id String @id @default(cuid())
-  userId  String
+// model SpaceMembers {
+//   id String @id @default(cuid())
+//   userId  String
+//   spaceId String
+
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+
+//   @@unique([userId])
+
+// }
+
+// model SpaceAdmins {
+//   id String @id @default(cuid())
+//   userId  String
+//   spaceId String
+
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+
+//   @@unique([userId])
+// }
+
+model Document{
+  id Int @id @default(autoincrement())
+  name String
+  type String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   spaceId String
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
-
-  @@unique([userId])
+  space Space @relation(fields: [spaceId], references: [id])
 }
